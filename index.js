@@ -50,23 +50,36 @@ function userQuestions() {
         }
 
 ])
-
-
+};
+var getName = (data) => {
+    var queryURL = `https://api.github.com/users/${data.projectUserName}`;
+    return axios.get(queryURL)
+    
+}
 
 function generateMarkdown(data) {
+    console.log(data)
   return `
-  # ${data.projectTitle}
+  # Project Title: 
+      ${data.projectTitle}
 
-  ## Description  ${data.projectDescription}
+  ## Description:  
+      ${data.projectDescription}
 
-  ## How to Install ${data.projectInstall}
+  ## How to Install: 
+      ${data.projectInstall}
 
   ## The application will be invoked by using the following command: 
       ${data.projectUsage}
 
+  ## To run a test, follow these commands: 
+      ${data.projectTest}
   
-  
-  
+  ## What is your GitHub user name:
+      ${data.projectUserName}
+
+  ## What is your email?
+      ${data.projectEmail}
   
   `;
   
@@ -75,9 +88,11 @@ function generateMarkdown(data) {
 async function awaitingFunction() {
     console.log("generating ReadMe")
     try {
-    const prompt = await userQuestions()
-    const md = await generateMarkdown()
-
+    const data = await userQuestions()
+    const res = await getName(data)
+    const md = await generateMarkdown(data, res.data.html_url)
+    
+    await writeFileAsync("README.md", md)
 
     
     } catch (err) {
@@ -85,6 +100,6 @@ async function awaitingFunction() {
     }
 } 
 
-}
 
-userQuestions();
+awaitingFunction();
+
