@@ -60,11 +60,24 @@ var getName = (data) => {
 function generateMarkdown(data) {
     console.log(data)
   return `
-  # Project Title: 
-      ${data.projectTitle}
+  # ${data.projectTitle}
 
+  ![Github license](https://img.shields.io/npm/v/nock)
+   
   ## Description:  
       ${data.projectDescription}
+      
+  ## Table of Contents:
+
+    *[Installation](#projectInstall)
+
+    *[Usage](#projectUsage)
+
+    *[Test](#projectTest)
+
+    *[Username](#projectUserName)
+
+    *[Email](#projectEmail)
 
   ## How to Install: 
       ${data.projectInstall}
